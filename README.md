@@ -25,7 +25,7 @@ text = "อะจ๊ะเอ๋ตัวเอง ท่านผู้เจ�
 ```
 * CRFCut - Thai sentence segmenter  
 Thai sentence segmentation using conditional random field, default model trained on TED dataset  
-Ref: https://github.com/vistec-AI/ted_crawler
+Ref: [GitHub repository](https://github.com/vistec-AI/ted_crawler)
 ```.python
 print(sent_tokenize(text)) 
 #-> ['อะจ๊ะเอ๋ตัวเอง ', 'ท่านผู้เจริญผู้ซึ่งมากไปด้วยปัญญา ', 'อะฮ่า']
@@ -57,8 +57,9 @@ print(clause_tokenize(['อะ','จ๊ะเอ๋','ตัวเอง','ท�
 ```
 ### word level
 #### dictionary base
-* longest maching
-ตัดคำให้ยาวที่สุด
+* longest matching  
+ตัดคำที่มีความหมายและยาวที่สุด โดยไล่จากซ้ายไปขวาของ string  
+Ref: -
 ```.python
 print('|'.join(word_tokenize('ถอยหมอน', engine='longest')))
 #-> ถอย|หมอน
@@ -66,7 +67,9 @@ print('|'.join(word_tokenize(text, engine='longest')))
 #-> อะ|จ๊ะเอ๋|ตัวเอง| |ท่าน|ผู้|เจริญ|ผู้|ซึ่ง|มาก|ไป|ด้วย|ปัญญา| |อะ|ฮ่า
 ```
 * newmm  
-maximal maching + Thai Character Cluster
+maximal matching + Thai Character Cluster  
+ตัดคำให้มีจำนวนน้อยที่สุด โดยให้เหลือจำนวนคำที่ไม่มีความหมายน้อยที่สุด  
+Ref: -
 ```.python
 print('|'.join(word_tokenize('ถอยหมอน', engine='newmm')))
 #-> ถอย|หมอน
@@ -74,7 +77,7 @@ print('|'.join(word_tokenize(text, engine='newmm')))
 #-> อะ|จ๊ะเอ๋|ตัวเอง| |ท่าน|ผู้|เจริญ|ผู้|ซึ่ง|มาก|ไป|ด้วย|ปัญญา| |อะ|ฮ่า
 ```
 * nercut  
-maximal maching + Thai Character Cluster (TCC) boundaries
+maximal matching + Thai Character Cluster (TCC) boundaries
 ```.python
 print('|'.join(word_tokenize('ถอยหมอน', engine='nercut')))
 #-> ถอย|หมอน
@@ -82,7 +85,8 @@ print('|'.join(word_tokenize(text, engine='nercut')))
 #-> อะ|จ๊ะเอ๋|ตัวเอง| |ท่าน|ผู้|เจริญ|ผู้|ซึ่ง|มาก|ไป|ด้วย|ปัญญา| |อะ|ฮ่า
 ```
 * nlpo3  
-maximal maching + Thai Character Cluster boundaries for rust/node.js
+maximal matching + Thai Character Cluster boundaries for rust/node.js  
+Ref: [GitHub repository](https://github.com/PyThaiNLP/nlpo3)
 ```.python
 print('|'.join(word_tokenize('ถอยหมอน', engine='nlpo3')))
 #-> ถอย|หมอน
@@ -98,7 +102,10 @@ print('|'.join(word_tokenize(text, engine='multi_cut')))
 ```
 #### machine learning base
 * sefr cut  
-Stacked Ensemble Filter and Refine for Word Segmentation
+SEFR CUT (Stacked Ensemble Filter and Refine for Word Segmentation)  
+Domain Adaptation of Thai Word Segmentation Models using Stacked Ensemble (EMNLP 2020)  
+CRF as Stacked Model and DeepCut as Baseline model  
+Ref: [GitHub repository](https://github.com/mrpeerat/SEFR_CUT)
 ```.python
 print('|'.join(word_tokenize('ถอยหมอน', engine='sefr_cut')))
 #-> ถอย|หมอน
@@ -106,21 +113,29 @@ print('|'.join(word_tokenize(text, engine='sefr_cut')))
 #-> อะ|จ๊ะ|เอ๋|ตัว|เอง| |ท่าน|ผู้|เจริญ|ผู้|ซึ่ง|มาก|ไป|ด้วย|ปัญญา| |อะ|ฮ่า
 ```
 #### deep learning base
-* Attacut
+* Attacut  
+tokenizor included CNN model  
+Ref: [GitHub repository](https://github.com/PyThaiNLP/attacut)
 ```.python
 print('|'.join(word_tokenize('ถอยหมอน', engine='attacut')))
 #-> ถอย|หมอน
 print('|'.join(word_tokenize(text, engine='attacut')))
 #-> อะจ๊ะเอ๋|ตัว|เอง| |ท่าน|ผู้|เจริญ|ผู้|ซึ่ง|มาก|ไป|ด้วย|ปัญญา| |อะฮ่า
 ```
-* Deepcut
+* Deepcut  
+tokenizor included CNN model  
+Ref: [GitHub repository](https://github.com/rkcosmos/deepcut)
 ```.python
 print('|'.join(word_tokenize('ถอยหมอน', engine='deepcut')))
 #-> ถอยหมอน
 print('|'.join(word_tokenize(text, engine='deepcut')))
 #-> อะจ๊ะ|เอ๋|ตัว|เอง| |ท่าน|ผู้|เจริญ|ผู้|ซึ่ง|มาก|ไป|ด้วย|ปัญญา อะฮ่า
 ```
-* OSKut
+* OSKut  
+OSKut (Out-of-domain StacKed cut for Word Segmentation)  
+Handling Cross- and Out-of-Domain Samples in Thai Word Segmentation (ACL 2021 Findings)  
+Stacked Ensemble Framework and DeepCut as Baseline model  
+Ref: [GitHub repository](https://github.com/mrpeerat/OSKut)
 ```.python
 print('|'.join(word_tokenize('ถอยหมอน', engine='oskut')))
 #-> ถอยหมอน
@@ -128,42 +143,51 @@ print('|'.join(word_tokenize(text, engine='oskut')))
 #-> อะ|จ๊ะ|เอ๋|ตัว|เอง| |ท่าน|ผู้|เจริญ|ผู้ซึ่ง|มาก|ไป|ด้วย|ปัญญา| |อะ|ฮ่า
 ```
 ### subword level
-* tcc
+The basic idea behind subword tokenization is to combine the best aspects of character and word tokenization. On the one hand, we want to split rare words into smaller units to allow the model to deal with complex words and misspellings. On the other hand, we want to keep frequent words as unique entities so that we can keep the length of our inputs to a manageable size. The main distinguishing feature of subword tokenization (as well as word tokenization) is that it is learned from the pretraining corpus using a mix of statistical rules and algorithms.
+* tcc  
+Thai Character Clusters  
+Ref: [GitHub repository (Java)](https://github.com/wittawatj/jtcc)  
+Python code: Korakot Chaovavanich
 ```.python
 print('|'.join(subword_tokenize('ถอยหมอน', engine='tcc')))
 #-> ถ|อ|ย|ห|ม|อ|น
 print('|'.join(subword_tokenize(text, engine='tcc')))
 #-> อะ|จ๊ะ|เอ๋|ตัว|เอ|ง| |ท่า|น|ผู้|เจ|ริ|ญ|ผู้|ซึ่|ง|มา|ก|ไป|ด้|ว|ย|ปัญ|ญา| |อะ|ฮ่า
 ```
-* etcc
+* etcc  
+Enhanced Thai Character Cluster  
 ```.python
 print('|'.join(subword_tokenize('ถอยหมอน', engine='etcc')))
 #-> ถ|อ|ย|ห|ม|อ|น
 print('|'.join(subword_tokenize(text, engine='etcc')))
 #-> อะ|จ๊ะ|เอ๋ตัวเอ|ง| |ท่า|น|ผู้เจ|ริญ|ผู้|ซึ่|ง|มา|ก|ไป|ด้|ว|ย|ปัญ|ญา| |อะ|ฮ่า
 ```
-* dict
+* dict  
+newmm word tokenizer with a syllable dictionary
 ```.python
 print('|'.join(subword_tokenize('ถอยหมอน', engine='dict')))
 #-> ถอย|หมอน
 print('|'.join(subword_tokenize(text, engine='dict')))
 #-> อะ|จ๊ะ|เอ๋|ตัว|เอง| |ท่าน|ผู้|เจริญ|ผู้|ซึ่ง|มาก|ไป|ด้วย|ปัญ|ญา| |อะ|ฮ่า
 ```
-* ssg
+* ssg  
+CRF syllable segmenter for Thai
 ```.python
 print('|'.join(subword_tokenize('ถอยหมอน', engine='ssg')))
 #-> ถอย|หมอน
 print('|'.join(subword_tokenize(text, engine='ssg')))
 #-> อะ|จ๊ะ|เอ๋|ตัว|เอง| ท่าน|ผู้|เจริญ|ผู้|ซึ่ง|มาก|ไป|ด้วย|ปัญ|ญา| |อะ|ฮ่า
 ```
-* tltk
+* tltk  
+syllable tokenizer from tltk
 ```.python
 print('|'.join(subword_tokenize('ถอยหมอน', engine='tltk')))
 #-> ถอย|หมอน
 print('|'.join(subword_tokenize(text, engine='tltk')))
 #-> อะ|จ๊ะ|เอ๋|ตัว|เอง|<s/>ท่าน|ผู้|เจริญ|ผู้|ซึ่ง|มาก|ไป|ด้วย|ปัญ|ญา|<s/>อะ|ฮ่า
 ```
-* wangchanberta
+* wangchanberta  
+[SentencePiece](https://huggingface.co/docs/transformers/tokenizer_summary#sentencepiece) from wangchanberta model
 ```.python
 print('|'.join(subword_tokenize('ถอยหมอน', engine='wangchanberta')))
 #-> ▁|ถอย|หมอน
@@ -183,3 +207,4 @@ syllable_tokenize in pythainlp now is deprecated (from developer)
 # Reference resourse
 1. pythainlp: https://pythainlp.github.io/dev-docs/api/tokenize.html
 2. nlp with transformer: https://github.com/nlp-with-transformers/notebooks
+3. hugglingface
